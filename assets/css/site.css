@@ -29,3 +29,7 @@
 form p {
     font-size: .89em;
 }
+
+.dashboard-tab{
+    margin: 50px auto 50px;
+}
