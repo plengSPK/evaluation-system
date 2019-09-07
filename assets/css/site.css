@@ -14,11 +14,17 @@
     width: 100%;
 } */
 
-.form-div{
+.form-div.login{
     margin: 50px auto 50px;
     padding: 25px 15px 10px 15px;
     border: 1px solid #80ced7;
     border-radius: 5px;
+    font-size: 1.1em;
+}
+
+.form-div.evaluate{
+    margin: 25px 0 25px;
+    padding: 25px 15px 10px 15px;
     font-size: 1.1em;
 }
 
@@ -32,4 +38,15 @@ form p {
 
 .dashboard-tab{
     margin: 50px auto 50px;
+}
+.evaluate-table{
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+.evaluate-table tr td{
+    text-align: center;
+}
+
+.evaluate-table tr td input[type="radio"]{
+    transform: scale(1.5);
 }

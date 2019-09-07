@@ -29,8 +29,16 @@ class User_model extends CI_Model
         return $query->result_array();
     }
 
-    public function getAllUser_department($department_id){
-        $query = $this->db->get_where('users', array('department_id' => $department_id));
+    public function getAllEmp_by_department($department_id, $user_id = 0){
+        if($user_id == 0){
+            $query = $this->db->get_where('users', array('department_id' => $department_id, 
+                                                         'level' => '1'));
+        }else{     
+            $query = $this->db->get_where('users', array('department_id' => $department_id, 
+                                                         'level' => '1', 
+                                                         'user_id !=' => $user_id));
+        }
+
         if ($query->num_rows() > 0)
         {  
             return $query->result_array();

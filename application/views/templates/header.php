@@ -8,7 +8,11 @@
     <title>Evaluation System - <?= $subtitle ?></title>
 
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/jquery.dataTables.min.css'); ?>">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('assets/css/site.css'); ?>">
+    
     <script src="<?= base_url('assets/js/Chart.bundle.js');?>"></script>
 </head>
 
