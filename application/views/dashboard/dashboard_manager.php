@@ -6,7 +6,7 @@
                 <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="content-tab" data-toggle="tab" href="#content" role="tab" aria-controls="content" aria-selected="false">Content</a>
+                <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">Pending</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -41,24 +41,23 @@
                             <th scope="row" class="text-center"><?=$index+1;?></th>
                             <td><?=$user['name'];?></td>
                             <?php if($countEval !== false && $count_emp == $countEval): ?>
-                                <td>Complete</td>
-                                <td class="text-center">
-                                    <a href="<?php echo base_url('/evaluate/result/') . $user['user_id']; ?>">
-                                        <i class="material-icons">assignment</i>
-                                    </a>
-                                </td>                            
+                                <td>Complete</td>                        
                             <?php else: ?>
                                 <td>Waiting to complete</td>
-                                <td class="text-center"></td> 
-                            <?php endif; ?>
+                            <?php endif; ?>                            
+                            <td class="text-center">
+                                <a href="<?php echo base_url('/evaluate/result/') . $user['user_id']; ?>">
+                                    <i class="material-icons">assignment</i>
+                                </a>
+                            </td>    
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
 
             </div>
-            <div class="tab-pane fade" id="content" role="tabpanel" aria-labelledby="content-tab">
-                content
+            <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                pending
             </div>
         </div>
 

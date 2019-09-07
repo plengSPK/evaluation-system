@@ -44,7 +44,7 @@ class Evaluate extends CI_Controller {
         [$curQuarter,$curYear] = getQuarterYear();
         
         if ($this->form_validation->run() == TRUE) {
-            if($user_detail['user_id'] != $target_id){
+            if($user_detail['user_id'] != $target_id && $user_detail['level'] == '1'){
                 $data_insert = array(
                     'time_mange_score' => $score_time,
                     'quality_score' => $score_quality,
@@ -103,14 +103,75 @@ class Evaluate extends CI_Controller {
         if($user_id == 0){
             $this->index();
         }
+        
+        $this->form_validation->set_rules('quarter', 'Quarter', 'required');
+        $this->form_validation->set_rules('year', 'Year', 'required');
+        $this->form_validation->run();
+        if ($this->form_validation->run() == TRUE) {
+            $quarter = $this->input->post('quarter');
+            $year = $this->input->post('year');
+        }
 
         $data['subtitle'] = 'Evaluate';
 		$user_detail = $this->session->user_detail;
 		$data['user_detail'] = $user_detail;
-		$data_detail['user_detail'] = $user_detail;
+        $data_detail['user_detail'] = $user_detail;
+
+        if($user_detail['level'] == '1'){
+            if($user_id != $user_detail['user_id']){
+                $this->index();
+            }
+        }
         
-        $this->load->view('templates/header', $data);
-		$this->load->view('evaluate/result',$data_detail);
-		$this->load->view('templates/footer');
+        if($year == 0){
+            [$curQuarter,$curYear] = getQuarterYear();
+            $val_eval = $this->evaluate_model->getEvaluation_by_targetUser($user_id,$curQuarter,$curYear);
+            $data_detail['quarter'] = $curQuarter;
+            $data_detail['year'] = $curYear;
+        }else{
+            $val_eval = $this->evaluate_model->getEvaluation_by_targetUser($user_id,$quarter,$year);
+            $data_detail['quarter'] = $quarter;
+            $data_detail['year'] = $year;
+        }
+        
+        if( $val_eval == ''){           
+            $data_detail['no_data'] = 'true';
+            $val_target = $this->user_model->getUserInfo_by_id($user_id);
+            $data_detail['target_user'] = $val_target[0];
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('evaluate/result',$data_detail);
+            $this->load->view('templates/footer');
+        }else{
+            $data_detail['val_eval'] = $val_eval;
+            $count_eval = count($val_eval);
+
+            $val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id']);
+            $count_emp = count($val_user)-1;
+            $data_detail['count_emp'] = $count_emp;
+    
+            if($count_eval != $count_emp){
+                $data_detail['isNotComplete'] = 'true';
+            }
+
+            $sum_score = array();
+            $score = array('time_mange_score','quality_score','creativity_score','teamwork_score','discipline_score');
+            foreach($score as $item){
+                $average_score = array_sum(array_column($val_eval, $item))/$count_emp;
+                //$sum_score[$item] = $average_score; 
+                //$sum_score[$item] = number_format((float)$average_score, 2, '.', ''); 
+                $sum_score[$item] = number_format((float)$average_score*100/4,2, '.', ''); 
+            }
+            $data_detail['sum_score'] = $sum_score;
+            //echo "<pre>" . print_r($final) . "<pre>" . "<br>";
+            
+            $val_target = $this->user_model->getUserInfo_by_id($user_id);
+            $data_detail['target_user'] = $val_target[0];
+    
+            $this->load->view('templates/header', $data);
+            $this->load->view('evaluate/result',$data_detail);
+            $this->load->view('templates/footer');
+        }
     }
+
 }

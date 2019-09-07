@@ -1,52 +1,59 @@
-.navbar-brand{
-    font-weight: bold;
+.navbar-brand {
+	font-weight: bold;
 }
 
-.login-bar{
-    text-align: right;
-    margin: auto;
-}
-.login-name{
-    margin-right: 20px;
+.login-bar {
+	text-align: right;
+	margin: auto;
 }
 /* 
 .row{
     width: 100%;
 } */
 
-.form-div.login{
-    margin: 50px auto 50px;
-    padding: 25px 15px 10px 15px;
-    border: 1px solid #80ced7;
-    border-radius: 5px;
-    font-size: 1.1em;
+.form-div.login {
+	margin: 50px auto 50px;
+	padding: 25px 15px 10px 15px;
+	border: 1px solid #80ced7;
+	border-radius: 5px;
+	font-size: 1.1em;
 }
 
-.form-div.evaluate{
-    margin: 25px 0 25px;
-    padding: 25px 15px 10px 15px;
-    font-size: 1.1em;
+.form-div.evaluate {
+	margin: 25px 0 25px;
+	padding: 25px 15px 10px 15px;
+	font-size: 1.1em;
 }
 
-.form-control:focus{
-    box-shadow: none;
+.form-control:focus {
+	box-shadow: none;
 }
 
 form p {
-    font-size: .89em;
+	font-size: 0.89em;
 }
 
-.dashboard-tab{
-    margin: 50px auto 50px;
+.dashboard-tab {
+	margin: 50px auto 50px;
 }
-.evaluate-table{
-    margin-top: 25px;
-    margin-bottom: 50px;
+.evaluate-table {
+	margin-top: 25px;
+	margin-bottom: 50px;
 }
-.evaluate-table tr td{
-    text-align: center;
+.evaluate-table tr td {
+	text-align: center;
 }
 
-.evaluate-table tr td input[type="radio"]{
-    transform: scale(1.5);
+.evaluate-table tr td input[type="radio"] {
+	transform: scale(1.5);
 }
+
+/* .result-eval {
+	border: 1px solid #8c8c8c;
+	border-radius: 16px;
+	padding: 20px 15px;
+	margin: 40px 0;
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.04);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.04);
+	box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.04);
+} */

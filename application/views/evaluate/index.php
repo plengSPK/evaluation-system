@@ -75,5 +75,6 @@
                 <button type="submit" name="login-btn" class="btn btn-primary btn-block btn-lg offset-sm-5 col-sm-2">Submit</button>
             </div>
         </form>
+        <a href="<?= base_url('/'); ?>" class="btn btn-success btn-block btn-lg offset-sm-5 col-sm-2">Back</a>
     </div>
 </div>

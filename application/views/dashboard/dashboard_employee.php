@@ -12,13 +12,15 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                 
+            <a href="<?= base_url('/evaluate/result/') . $user_detail['user_id']; ?>" class="btn btn-warning btn-block btn-md offset-sm-5 col-sm-2 mb-5">My Summary Evaluation</a>
+
             <?php if ($this->session->flashdata('evaluate_info') != '') : ?>
             <div class="alert alert-success">
                 <?= $this->session->flashdata('evaluate_info'); ?>
             </div>
             <?php endif; ?>
 
-            <table class="table" id="dashboard_emp" style="width:100%">
+                <table class="table" id="dashboard_emp" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">#</th>

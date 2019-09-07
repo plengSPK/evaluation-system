@@ -16,3 +16,25 @@ if(!function_exists('getQuarterYear'))
 		return [$curQuarter,$curYear];
 	}
 }
+
+if(!function_exists('convertScore'))
+{
+    function convertScore($score){
+
+		switch($score){
+			case 4:
+				return "Very Good";
+				break;			
+			case 3:
+				return "Good";
+				break;				
+			case 2:
+				return "So So";
+				break;				
+			case 1:
+				return "Bad";
+				break;
+				
+		}
+	}
+}

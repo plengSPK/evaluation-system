@@ -24,6 +24,17 @@ class Evaluate_model extends CI_Model
         }
     }
 
+    public function getEvaluation_by_targetUser($target_user_id, $quarter ,$year){        
+
+        $query = $this->db->get_where('evaluates', array('target_user_id' => $target_user_id, 
+                                                         'quarter' => $quarter, 
+                                                         'year' => $year));
+        if ($query->num_rows() > 0)
+        {           
+            return $query->result_array();
+        }
+    }
+
     public function getAllEvaluation($department_id, $quarter, $year){        
 
         $query = $this->db->get_where('evaluates', array('department_id' => $department_id,'evaluator_user_id != target_user_id'));

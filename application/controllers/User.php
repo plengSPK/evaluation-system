@@ -22,7 +22,7 @@ class User extends CI_Controller
         $email = $this->input->post('email');
         $password = $this->input->post('password');
 
-        $this->form_validation->set_rules('email', 'email', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
         
         if ($this->form_validation->run() == TRUE) {
@@ -55,15 +55,17 @@ class User extends CI_Controller
         $name = $this->input->post('name');
         $department = $this->input->post('department');
         $level = $this->input->post('level');
+        $salary = $this->input->post('salary');
 
-        $this->form_validation->set_rules('email', 'email', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('name', 'name', 'required');
-        $this->form_validation->set_rules('department', 'department', 'required');
-        $this->form_validation->set_rules('level', 'level', 'required');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('department', 'Department', 'required');
+        $this->form_validation->set_rules('level', 'Level', 'required');
+        $this->form_validation->set_rules('salary', 'Salary', 'required');
        
         if ($this->form_validation->run() == TRUE) {
-            $response_val = $this->user_model->insertUser($name, $email, $password, $department, $level);
+            $response_val = $this->user_model->insertUser($name, $email, $password, $department, $level, $salary);
             if ($response_val == true) {
                 $this->session->set_flashdata('register_info', 'Register Successful!');
             }

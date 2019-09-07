@@ -5,7 +5,7 @@ class User_model extends CI_Model
 
     public function insertUser($name, $email, $password, $department, $level)
     {
-        $query = $this->db->query("INSERT INTO users (name, email, password, department_id, level) VALUES ('$name', '$email', md5('$password'), $department, $level)");
+        $query = $this->db->query("INSERT INTO users (name, email, password, department_id, level, salary) VALUES ('$name', '$email', md5('$password'), $department, $level, $salary)");
         return $query;
     }
 

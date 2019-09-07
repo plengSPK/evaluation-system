@@ -36,6 +36,10 @@
                     <option value="3">Director</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="salary">Salary</label>
+                <input type="number" name="salary" value="" class="form-control form-control-lg">
+            </div>
 
             <div class="form-group">
                 <button type="submit" name="signup-btn" class="btn btn-primary btn-block btn-lg">Sign Up</button>

@@ -42,7 +42,7 @@ class Dashboard extends CI_Controller {
 			$val_eval = $this->evaluate_model->getAllEvaluation($user_detail['department_id'], $curQuarter, $curYear);
 				// echo "<pre>" . print_r($val_user) . "<pre>" . "<br>";
 				// echo "<pre>" . print_r($val_eval) . "<pre>" . "<br>";
-			$val_temp = array_count_values(array_column($val_eval, 'target_user_id'));
+			// $val_temp = array_count_values(array_column($val_eval, 'target_user_id'));
 			// echo "<pre>" . print_r($val_temp) . "<pre>" . "<br>";
 
 			// foreach($val_user as $index => $user){
@@ -59,17 +59,4 @@ class Dashboard extends CI_Controller {
 		}
 	}
 
-	// private function getQuarterYear($date = 0){
-
-	// 	if($date == 0){
-	// 		$curMonth = date("m", time());
-	// 		$curYear = date("Y");
-	// 	}else{			
-	// 		$curMonth = $date['month'];
-	// 		$curYear = $date['year'];
-	// 	}
-	// 	$curQuarter = ceil($curMonth/3);
-
-	// 	return [$curQuarter,$curYear];
-	// }
 }
