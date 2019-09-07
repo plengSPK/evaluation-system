@@ -1,46 +1,68 @@
 <div class="row">
-    <div class="col-md-4 offset-md-4">
-        emp
-        <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
+    <div class="col col-md-12">
+
+        <ul class="nav nav-tabs dashboard-tab" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="content-tab" data-toggle="tab" href="#content" role="tab" aria-controls="content" aria-selected="false">Content</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                
+            <?php if ($this->session->flashdata('evaluate_info') != '') : ?>
+            <div class="alert alert-success">
+                <?= $this->session->flashdata('evaluate_info'); ?>
+            </div>
+            <?php endif; ?>
+
+            <table class="table" id="dashboard_emp" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            foreach($val_user as $index => $user):
+                                if($val_eval != null)
+                                    $isEval = array_search($user['user_id'], array_column($val_eval, 'target_user_id'));
+                                else
+                                    $isEval = false;
+                        ?>
+                        <tr>
+                            <th scope="row" class="text-center"><?=$index+1;?></th>
+                            <td><?=$user['name'];?></td>
+                            <?php if($isEval !== false): ?>
+                                <td>Complete</td>
+                                <td class="text-center">
+                                    <a href="<?php echo base_url('/evaluate/view/') . $val_eval[$isEval]['evaluate_id']; ?>">
+                                        <i class="material-icons">search</i>
+                                    </a>
+                                </td>                            
+                            <?php else: ?>
+                                <td>Waiting to complete</td>
+                                <td class="text-center">
+                                    <a href="<?php echo base_url('/evaluate/new/') . $user['user_id']; ?>">
+                                        <i class="material-icons">create</i>
+                                    </a>
+                                </td> 
+                            <?php endif; ?>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="tab-pane fade" id="content" role="tabpanel" aria-labelledby="content-tab">
+                content
+            </div>
+        </div>
+
     </div>
 </div>
-
-<!-- <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-</script> -->

@@ -26,22 +26,37 @@ class Dashboard extends CI_Controller {
 		[$curQuarter,$curYear] = getQuarterYear();
 		//echo $curQuarter. "/" . $curYear;
 
-		$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id'], $user_detail['user_id']);
-		$val_eval = $this->evaluate_model->getEvaluation_by_emp($user_detail['department_id'], $user_detail['user_id'], $curQuarter, $curYear);
-		// echo print_r($val_eval);
+		if($user_detail['level'] == '1'){			
+			$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id'], $user_detail['user_id']);
+			$val_eval = $this->evaluate_model->getEvaluation_by_emp($user_detail['department_id'], $user_detail['user_id'], $curQuarter, $curYear);
+			
+			$data_index['val_user'] = $val_user;
+			$data_index['val_eval'] = $val_eval;
+	
+			$this->load->view('templates/header', $data);
+			$this->load->view('dashboard/dashboard_employee', $data_index);
+			$this->load->view('templates/footer');
+			
+		}elseif($user_detail['level'] == '2'){
+			$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id']);
+			$val_eval = $this->evaluate_model->getAllEvaluation($user_detail['department_id'], $curQuarter, $curYear);
+				// echo "<pre>" . print_r($val_user) . "<pre>" . "<br>";
+				// echo "<pre>" . print_r($val_eval) . "<pre>" . "<br>";
+			$val_temp = array_count_values(array_column($val_eval, 'target_user_id'));
+			// echo "<pre>" . print_r($val_temp) . "<pre>" . "<br>";
 
-		// foreach($val_user as $user){
-		// 	$isEval = array_search($user['user_id'], array_column($val_eval, 'target_user_id')); //  !== false ? true : false
-		// 	echo $isEval;
-		// 	echo $val_eval[$isEval]['evaluate_id'];
-		// }
+			// foreach($val_user as $index => $user){
+			// 	$countEval = $val_temp[$user['user_id']];
+			// 	echo $user['name'] . ": " . $countEval . "<br>";
+			// }
 
-		$data_index['val_user'] = $val_user;
-		$data_index['val_eval'] = $val_eval;
-
-		$this->load->view('templates/header', $data);
-		$this->load->view('dashboard/index', $data_index);
-		$this->load->view('templates/footer');
+			$data_index['val_user'] = $val_user;
+			$data_index['val_eval'] = $val_eval;
+	
+			$this->load->view('templates/header', $data);
+			$this->load->view('dashboard/dashboard_manager', $data_index);
+			$this->load->view('templates/footer');
+		}
 	}
 
 	// private function getQuarterYear($date = 0){

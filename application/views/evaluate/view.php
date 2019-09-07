@@ -5,23 +5,17 @@
 
             <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
-            <?php if ($this->session->flashdata('evaluate_info_sameID') != '') : ?>
-            <div class="alert alert-danger">
-                <?= $this->session->flashdata('evaluate_info_sameID'); ?>
-            </div>
-            <?php endif; ?>
-        
             <div class="form-group form-row">
                 <label class="col-sm-2 col-form-label" for="name">Employee Name: </label>
                 <input type="text" name="name" value="<?= $target_user['name']; ?>" class="form-control col-sm-3" disabled ">
             </div>
             <div class=" form-group form-row">
                 <label class="col-sm-2 col-form-label" for="last_update">Date: </label>
-                <input type="text" name="last_update" value="<?= date('d-m-Y'); ?>" class="form-control col-sm-3" disabled>
+                <input type="text" name="last_update" value="<?= $evalaute_detail['last_update']; ?>" class="form-control col-sm-3" disabled>
             </div>
 
             <div class="form-group form-row">
-                <table id="table" class="table evaluate-table">
+                <table id="table" class="table evaluate-table view">
                     <thead>
                         <tr>
                             <th></th>
@@ -32,36 +26,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">Time management</th>
+                        <tr class="time">
+                            <th scope="row" data-score="<?=$evalaute_detail['time_mange_score'];?>">Time management</th>
                             <td><input type="radio" name="score_time" value="4"></td>
                             <td><input type="radio" name="score_time" value="3"></td>
                             <td><input type="radio" name="score_time" value="2"></td>
                             <td><input type="radio" name="score_time" value="1"></td>
                         </tr>
-                        <tr>
-                            <th scope="row">Quality of work</th>
+                        <tr class="quality" >
+                            <th scope="row" data-score="<?=$evalaute_detail['quality_score'];?>">Quality of work</th>
                             <td><input type="radio" name="score_quality" value="4"></td>
                             <td><input type="radio" name="score_quality" value="3"></td>
                             <td><input type="radio" name="score_quality" value="2"></td>
                             <td><input type="radio" name="score_quality" value="1"></td>
                         </tr>
-                        <tr>
-                            <th scope="row">Creativity</th>
+                        <tr class="creativity">
+                            <th scope="row" data-score="<?=$evalaute_detail['creativity_score'];?>">Creativity</th>
                             <td><input type="radio" name="score_creativity" value="4"></td>
                             <td><input type="radio" name="score_creativity" value="3"></td>
                             <td><input type="radio" name="score_creativity" value="2"></td>
                             <td><input type="radio" name="score_creativity" value="1"></td>
                         </tr>
-                        <tr>
-                            <th scope="row">Team work</th>
+                        <tr class="teamwork">
+                            <th scope="row" data-score="<?=$evalaute_detail['teamwork_score'];?>">Team work</th>
                             <td><input type="radio" name="score_teamwork" value="4"></td>
                             <td><input type="radio" name="score_teamwork" value="3"></td>
                             <td><input type="radio" name="score_teamwork" value="2"></td>
                             <td><input type="radio" name="score_teamwork" value="1"></td>
                         </tr>
-                        <tr>
-                            <th scope="row">Discipline</th>
+                        <tr class="discipline">
+                            <th scope="row" data-score="<?=$evalaute_detail['discipline_score'];?>">Discipline</th>
                             <td><input type="radio" name="score_discipline" value="4"></td>
                             <td><input type="radio" name="score_discipline" value="3"></td>
                             <td><input type="radio" name="score_discipline" value="2"></td>
@@ -72,7 +66,7 @@
             </div>
 
             <div class="form-group form-row">
-                <button type="submit" name="login-btn" class="btn btn-primary btn-block btn-lg offset-sm-5 col-sm-2">Submit</button>
+                <button type="submit" name="login-btn" class="btn btn-primary btn-block btn-lg offset-sm-5 col-sm-2">Update</button>
             </div>
         </form>
     </div>
