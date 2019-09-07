@@ -24,6 +24,11 @@
             </div>
         </form>
 
+        <?php if($user_detail['level'] == '2'):?>
+            <a href="<?= base_url('/request/') . $target_user['user_id']; ?>" class="btn btn-warning btn-block btn-md offset-sm-10 col-sm-2">Send Request</a>
+            <p class="offset-sm-10 col-sm-2 text-center mb-0"><small><em>to Director for this user</em></small></p>
+        <?php endif;?>
+
         <?php if (isset($no_data)) : ?>
             <div class="text-center mt-5">
                 <h4>No Record.</h4>

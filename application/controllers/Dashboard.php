@@ -56,6 +56,17 @@ class Dashboard extends CI_Controller {
 			$this->load->view('templates/header', $data);
 			$this->load->view('dashboard/dashboard_manager', $data_index);
 			$this->load->view('templates/footer');
+
+		}elseif($user_detail['level'] == '3'){
+			$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id']);
+			$val_eval = $this->evaluate_model->getAllEvaluation($user_detail['department_id'], $curQuarter, $curYear);
+
+			$data_index['val_user'] = $val_user;
+			$data_index['val_eval'] = $val_eval;
+	
+			$this->load->view('templates/header', $data);
+			$this->load->view('dashboard/dashboard_director', $data_index);
+			$this->load->view('templates/footer');
 		}
 	}
 

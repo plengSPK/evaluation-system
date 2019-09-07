@@ -24,7 +24,8 @@
                             <th scope="col" class="text-center">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Status</th>
-                            <th scope="col" class="text-center">Action</th>
+                            <th scope="col" class="text-center">Detail</th>
+                            <th scope="col" class="text-center">Request</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +48,12 @@
                             <?php endif; ?>                            
                             <td class="text-center">
                                 <a href="<?php echo base_url('/evaluate/result/') . $user['user_id']; ?>">
-                                    <i class="material-icons">assignment</i>
+                                    <i class="material-icons">insert_chart_outlined</i>
+                                </a>
+                            </td>               
+                            <td class="text-center">
+                                <a href="<?php echo base_url('/request/') . $user['user_id']; ?>">
+                                    <i class="material-icons">description</i>
                                 </a>
                             </td>    
                         </tr>
