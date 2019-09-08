@@ -20,7 +20,21 @@ $(function(){
             "lengthChange":   false
         }
     );
+
+    $('#dashboard_director').DataTable(
+        {
+            "searching":   false,
+            "lengthChange":   false
+        }
+    );
     
+    $('#dashboard_director_history').DataTable(
+        {
+            "searching":   false,
+            "lengthChange":   false
+        }
+    );
+
     // detail page
     var score_time = $('.evaluate-table.view tr.time th').data('score');
     var score_quality = $('.evaluate-table.view tr.quality th').data('score');
@@ -144,7 +158,12 @@ $(function(){
                 console.log('error!');
             }
         });
+    }
 
+    // detail page
+    if( $('.detail-eval input[name="name"]').length > 0){
+        var status = $('.detail-eval input[name="name"]').data('value');
+        $('.detail-eval input[name="name"]').val(changeStatus(status));
     }
 
 });
@@ -204,4 +223,18 @@ function changeChartType(name) {
 
 function scoreCharttoPercent(score,top_score){
     return (score*100/top_score).toFixed(2);
+}
+
+function changeStatus(id){
+    switch (id){
+        case 0:
+            return "Pending";
+            break;
+        case 1:
+            return "Approved";
+            break;            
+        case 2:
+            return "Rejected";
+            break;
+    }
 }

@@ -12,7 +12,7 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                 
-                <table class="table" id="dashboard_manager_pending" style="width:100%">
+                <table class="table" id="dashboard_director" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">#</th>
@@ -22,25 +22,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($val_req as $index => $req) : 
+                        <?php $index_show = 0;
+                              foreach ($val_req as $index => $req) : 
+                              if($req['status'] != 0) continue;
+                              $index_show += 1;
                               $val_temp = array_search($req['target_user_id'],array_column($val_user, 'user_id'));?>
                             <tr>
-                                <th scope="row" class="text-center"><?= $index + 1; ?></th>
+                                <th scope="row" class="text-center"><?= $index_show; ?></th>
                                 <td><?= $val_user[$val_temp]['name'] ?></td>
-
-                                <?php if ($req['status'] == 0) :
-                                        $request_url = base_url('/request/view/') . $req['request_id']; ?>
-                                    <td class="text-center">Pending</td>
-                                <?php elseif ($req['status'] == 1) :
-                                        $request_url = base_url('/request/detail/') . $req['request_id']; ?>
-                                    <td class="text-center">Approved</td>
-                                <?php else :
-                                        $request_url = base_url('/request/detail/') . $req['request_id']; ?>
-                                    <td class="text-center">Rejected</td>
-                                <?php endif; ?>
-
+                                <td class="text-center">Pending</td>
                                 <td class="text-center">
-                                    <a href="<?= $request_url; ?>">
+                                    <a href="<?= base_url('/request/detail/') . $req['request_id']; ?>">
                                         <i class="material-icons">description</i>
                                     </a>
                                 </td>
@@ -51,7 +43,42 @@
 
             </div>
             <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                history
+                <table class="table" id="dashboard_director_history" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col" class="text-center">Pending Status</th>
+                            <th scope="col" class="text-center">Last Update</th>
+                            <th scope="col" class="text-center">View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $index_show = 0;
+                              foreach ($val_req as $index => $req) : 
+                              if($req['status'] == 0) continue;
+                              $index_show += 1;
+                              $val_temp = array_search($req['target_user_id'],array_column($val_user, 'user_id'));?>
+                            <tr>
+                                <th scope="row" class="text-center"><?= $index_show; ?></th>
+                                <td><?= $val_user[$val_temp]['name'] ?></td>
+                                <?php if ($req['status'] == 1) : ?>
+                                    <td class="text-center">Approved</td>
+                                <?php else : ?>
+                                    <td class="text-center">Rejected</td>
+                                <?php endif; ?>
+                                <td class="text-center"><?= $req['last_update']; ?></td>
+
+                                <td class="text-center">
+                                    <a href="<?= $request_url = base_url('/request/detail/') . $req['request_id']; ?>">
+                                        <i class="material-icons">description</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+
             </div>
         </div>
 

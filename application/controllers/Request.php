@@ -114,6 +114,9 @@ class Request extends CI_Controller {
         $val_target = $this->user_model->getUserInfo_by_id($val_req[0]['target_user_id']);
         $data_detail['target_user'] = $val_target[0];
 
+        $val_approve = $this->approve_model->GetApprove($request_id);
+        $data_detail['val_approve'] = $val_approve[0];
+
         if($user_detail['level'] == 1 || ($user_detail['department_id'] != $val_req[0]['department_id'])){
             $this->index();
         }
