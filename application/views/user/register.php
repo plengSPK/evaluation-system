@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-4 offset-md-4 form-div">
+    <div class="col-md-4 offset-md-4 form-div mt-5">
         <form class="form-signin" action="<?php echo base_url('/register'); ?>" method="post">
             <h3 class="text-center">Register</h3>
 

@@ -26,7 +26,8 @@
                 <div class="col col-md-2 login-bar">
                 <?php if (isset($user_detail)) : ?>
                     <span class="mr-4">
-                        <?= $user_detail['name']; ?>
+                        <i class="material-icons mr-1" style="vertical-align:middle;">person</i>
+                        <b><?= $user_detail['name']; ?></b>
                     </span>                    
                     <a href="<?php echo base_url('/logout'); ?>">Logout</a>
                 <?php endif; ?>

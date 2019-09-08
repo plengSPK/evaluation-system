@@ -41,6 +41,7 @@ class Evaluate extends CI_Controller {
         $this->form_validation->set_rules('score_teamwork', 'Team work', 'required');
         $this->form_validation->set_rules('score_discipline', 'Discipline', 'required');
         
+		$temp_date = array('month' => '2','year' => '2019');
         [$curQuarter,$curYear] = getQuarterYear();
         
         if ($this->form_validation->run() == TRUE) {
@@ -131,6 +132,7 @@ class Evaluate extends CI_Controller {
         }
         
         if($year == 0){
+            $temp_date = array('month' => '2','year' => '2019');
             [$curQuarter,$curYear] = getQuarterYear();
             $val_eval = $this->evaluate_model->getEvaluation_by_targetUser($user_id,$curQuarter,$curYear);
             $data_detail['quarter'] = $curQuarter;

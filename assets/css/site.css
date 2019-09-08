@@ -57,3 +57,9 @@ form p {
 	-moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.04);
 	box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.04);
 } */
+
+.progress{
+	width: 50%;
+	margin: 50px auto 25px;
+	height: 25px;
+}

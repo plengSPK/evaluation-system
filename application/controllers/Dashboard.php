@@ -23,14 +23,25 @@ class Dashboard extends CI_Controller {
 		$user_detail = $this->session->user_detail;
 		$data['user_detail'] = $user_detail;
 
-		$temp_date = array('month' => '2','year' => '2016');
+		$temp_date = array('month' => '2','year' => '2019');
 		[$curQuarter,$curYear] = getQuarterYear();
+		$val_date = array('quarter' => $curQuarter, 'year' => $curYear);
+		$data_index['val_date'] = $val_date;
 		//echo $curQuarter. "/" . $curYear;
+
+		$department_name = $this->department_model->getDepartment_by_id($user_detail['department_id']);
+		$data_index['department_name'] = $department_name[0]['department_name'];
 
 		if($user_detail['level'] == '1'){			
 			$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id'], $user_detail['user_id']);
 			$val_eval = $this->evaluate_model->getEvaluation_by_emp($user_detail['department_id'], $user_detail['user_id'], $curQuarter, $curYear);
 			
+			if($val_eval != false)
+				$precent_complete = number_format((float)count($val_eval)*100/count($val_user), 2, '.', '');
+			else
+				$precent_complete = 0;
+
+			$data_index['precent_complete'] = $precent_complete;
 			$data_index['val_user'] = $val_user;
 			$data_index['val_eval'] = $val_eval;
 	

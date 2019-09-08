@@ -12,12 +12,18 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                 
+                <div class="text-center mt-5 mb-5">
+                    <h4>Pending Request</h4>
+                    <p><i>(Department: <?= $department_name; ?>)</i></p>
+                </div>
+
                 <table class="table" id="dashboard_director" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">#</th>
                             <th scope="col">Name</th>
                             <th scope="col" class="text-center">Pending Status</th>
+                            <th scope="col" class="text-center">Pending Date</th>
                             <th scope="col" class="text-center">View</th>
                         </tr>
                     </thead>
@@ -31,6 +37,7 @@
                                 <th scope="row" class="text-center"><?= $index_show; ?></th>
                                 <td><?= $val_user[$val_temp]['name'] ?></td>
                                 <td class="text-center">Pending</td>
+                                <td class="text-center"><?= $req['last_update']; ?></td>
                                 <td class="text-center">
                                     <a href="<?= base_url('/request/detail/') . $req['request_id']; ?>">
                                         <i class="material-icons">description</i>
@@ -43,6 +50,11 @@
 
             </div>
             <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                
+                <div class="text-center mt-5 mb-5">
+                    <h4>History Request</h4>
+                </div>
+
                 <table class="table" id="dashboard_director_history" style="width:100%">
                     <thead>
                         <tr>

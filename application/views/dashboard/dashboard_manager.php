@@ -12,6 +12,12 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
 
+                <div class="text-center mt-5 mb-5">
+                    <h5><i>Current Evaluation</i></h5>
+                    <h4>Quarter: <?=$val_date['quarter'];?> / Year: <?=$val_date['year'];?></h4>
+                    <p><i>(Department: <?= $department_name; ?>)</i></p>
+                </div>
+
                 <?php if ($this->session->flashdata('request_info') != '') : ?>
                     <div class="alert alert-success">
                         <?= $this->session->flashdata('request_info'); ?>
@@ -29,7 +35,11 @@
                     </thead>
                     <tbody>
                         <?php
-                        $val_temp = array_count_values(array_column($val_eval, 'target_user_id'));
+                        if(isset($val_eval))
+                            $val_temp = array_count_values(array_column($val_eval, 'target_user_id'));
+                        else
+                            $val_eval = null;
+
                         $count_emp = count($val_user) - 1;
                         foreach ($val_user as $index => $user) :
                             if ($val_eval != null)
@@ -65,6 +75,7 @@
                             <th scope="col" class="text-center">#</th>
                             <th scope="col">Name</th>
                             <th scope="col" class="text-center">Pending Status</th>
+                            <th scope="col" class="text-center">Last Update</th>
                             <th scope="col" class="text-center">View</th>
                         </tr>
                     </thead>
@@ -85,6 +96,7 @@
                                         $request_url = base_url('/request/detail/') . $req['request_id']; ?>
                                     <td class="text-center">Rejected</td>
                                 <?php endif; ?>
+                                <td class="text-center"><?= $req['last_update']; ?></td>
 
                                 <td class="text-center">
                                     <a href="<?= $request_url; ?>">

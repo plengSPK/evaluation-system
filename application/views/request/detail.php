@@ -23,7 +23,7 @@
             <a href="<?= base_url('/evaluate/result/') . $target_user['user_id']; ?>" class="btn btn-info btn-block btn-md offset-sm-10 col-sm-2">Evaluation Score</a>
             <p class="offset-sm-10 col-sm-2 text-center mb-0"><small><em>of this user</em></small></p>
 
-            <div class="all-summary-score mt-5 mb-5" data-id="<?= $target_user['user_id']; ?>">
+            <div class="all-summary-score mt-3 mb-5" data-id="<?= $target_user['user_id']; ?>">
                 <h4 class="text-center mt-5 mb-4">Summay Overall Evaluation</h4>
                 <canvas id="all-summary-score" width="400" height="150"></canvas>
             </div>
