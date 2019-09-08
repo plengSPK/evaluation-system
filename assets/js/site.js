@@ -14,6 +14,12 @@ $(function(){
             "order": [2,'asc']
         }
     );
+    $('#dashboard_manager_pending').DataTable(
+        {
+            "searching":   false,
+            "lengthChange":   false
+        }
+    );
     
     // detail page
     var score_time = $('.evaluate-table.view tr.time th').data('score');
@@ -30,7 +36,7 @@ $(function(){
 
 
     // summary page
-    if($("#summary-score").length){
+    if($("#chart-summary").length){
         var summary_time = $('#result_emp tr td.time_mange_score').data('value');
         var summary_quality = $('#result_emp tr td.quality_score').data('value');
         var summary_creativity = $('#result_emp tr td.creativity_score').data('value');
@@ -66,8 +72,81 @@ $(function(){
             
         };
     
-        changeChartType();    
+        changeChartType('chart-summary');    
     }
+
+    // request page
+    if($("#all-summary-score").length){
+        var count_emp = $('.chart-all-summary').data('count');
+
+        config = {
+            type: 'bar',            
+            data: {
+                labels: ['Time management', 'Quality of work', 'Creativity', 'Team work', 'Discipline'],
+                datasets: []
+            },            
+        };
+
+        var backgroundColor= [
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 206, 86, 0.2)'
+        ];
+        var borderColor= [
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 206, 86, 1)'
+        ];
+
+        $.ajax({
+            type: 'POST',
+            url: BASE_URL + '/request/post_data',
+            data: {target_id: $('.all-summary-score').data('id') },
+            dataType: 'JSON', 
+            success: function (res) {
+                //console.log(res);
+                $.each(res, function(index, element) {
+                    var data_temp = [];
+                    data_temp.push(scoreCharttoPercent(element.time_mange_score/element.count,4));
+                    data_temp.push(scoreCharttoPercent(element.quality_score/element.count,4));
+                    data_temp.push(scoreCharttoPercent(element.creativity_score/element.count,4));
+                    data_temp.push(scoreCharttoPercent(element.teamwork_score/element.count,4));
+                    data_temp.push(scoreCharttoPercent(element.discipline_score/element.count,4));
+
+                    var dataset_temp = {
+                        label: '# of Scores in ' + element.quarter + '/' + element.year,
+                        data: data_temp,
+                        backgroundColor: backgroundColor[index%6],
+                        borderColor: borderColor[index%6],
+                        borderWidth: 1,
+                        fill: false,
+                        type: 'line',
+                    };
+                    var dataset_temp2 = {
+                        label: '# of Scores in ' + element.quarter + '/' + element.year,
+                        data: data_temp,
+                        backgroundColor: backgroundColor[index%6],
+                        borderColor: borderColor[index%6],
+                        borderWidth: 1,
+                    };
+                    config.data.datasets.push(dataset_temp);
+                    config.data.datasets.push(dataset_temp2);
+                });
+                changeChartType('all-summary-score'); 
+            },
+            error: function(){
+                console.log('error!');
+            }
+        });
+
+    }
+
 });
 var mySummaryChart;
 var config;
@@ -80,12 +159,12 @@ var config;
 //     return [y, m];
 // }
 
-function changeChartType() {
-    var type = $('.chart-summary button').data('type');
+function changeChartType(name) {
+    var type = $('.' + name + ' button').data('type');
     switch(type){
         case "bar":
             newType = "polarArea";
-            $('.chart-summary button').data('type',"polarArea");
+            $('.' + name + ' button').data('type',"polarArea");
             config.options = {
                             scale: {
                                 ticks: {
@@ -97,7 +176,7 @@ function changeChartType() {
             break;
         default:
             newType = "bar";
-            $('.chart-summary button').data('type',"bar");
+            $('.' + name + ' button').data('type',"bar");
             config.options =  {
                     scales: {        
                         yAxes: [{
@@ -111,7 +190,7 @@ function changeChartType() {
             break;
     }
 
-    var summaryChart = document.getElementById("summary-score").getContext("2d");
+    var summaryChart = document.getElementById(name).getContext("2d");
 
     if (mySummaryChart) {
         mySummaryChart.destroy();
@@ -120,4 +199,9 @@ function changeChartType() {
     var temp = jQuery.extend(true, {}, config);
     temp.type = newType;
     mySummaryChart = new Chart(summaryChart, temp);
+    
+}
+
+function scoreCharttoPercent(score,top_score){
+    return (score*100/top_score).toFixed(2);
 }

@@ -37,13 +37,36 @@ class Evaluate_model extends CI_Model
 
     public function getAllEvaluation($department_id, $quarter, $year){        
 
-        $query = $this->db->get_where('evaluates', array('department_id' => $department_id,'evaluator_user_id != target_user_id'));
+        $query = $this->db->get_where('evaluates', array('department_id' => $department_id,
+                                                         'evaluator_user_id != target_user_id', 
+                                                         'quarter' => $quarter, 
+                                                         'year' => $year
+                                                        ));
         if ($query->num_rows() > 0)
         {           
             return $query->result_array();
         }
     }
 
+    public function getAllEvaluation_allTime($target_user_id){    
+         
+        $this->db->select('count(*) as count,
+                            sum(time_mange_score) as time_mange_score,
+                            sum(quality_score) as quality_score,
+                            sum(creativity_score) as creativity_score,
+                            sum(teamwork_score) as teamwork_score,
+                            sum(discipline_score) as discipline_score,
+                            min(quarter) as quarter, min(year) as year');
+        $this->db->from('evaluates');
+        $this->db->where(array('target_user_id' => $target_user_id, 'evaluator_user_id != target_user_id'));
+        $this->db->group_by(array("quarter", "year"));
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0)
+        {           
+            return $query->result_array();
+        }
+    }
     
     public function InsertNewRecord($data_insert){  
 

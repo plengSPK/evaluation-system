@@ -30,33 +30,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                            foreach($val_user as $index => $user):
-                                if($val_eval != null)
-                                    $isEval = array_search($user['user_id'], array_column($val_eval, 'target_user_id'));
-                                else
-                                    $isEval = false;
-                        ?>
-                        <tr>
-                            <th scope="row" class="text-center"><?=$index+1;?></th>
-                            <td><?=$user['name'];?></td>
-                            <?php if($isEval !== false): ?>
-                                <td>Complete</td>
-                                <td class="text-center">
-                                    <a href="<?php echo base_url('/evaluate/view/') . $val_eval[$isEval]['evaluate_id']; ?>">
-                                        <i class="material-icons">search</i>
-                                    </a>
-                                </td>                            
-                            <?php else: ?>
-                                <td>Waiting to complete</td>
-                                <td class="text-center">
-                                    <a href="<?php echo base_url('/evaluate/new/') . $user['user_id']; ?>">
-                                        <i class="material-icons">create</i>
-                                    </a>
-                                </td> 
-                            <?php endif; ?>
-                        </tr>
-                        <?php endforeach; ?>
+                        <?php if (isset($val_user)) : ?>
+                            <?php 
+                                foreach($val_user as $index => $user):
+                                    if($val_eval != null)
+                                        $isEval = array_search($user['user_id'], array_column($val_eval, 'target_user_id'));
+                                    else
+                                        $isEval = false;
+                            ?>
+                            <tr>
+                                <th scope="row" class="text-center"><?=$index+1;?></th>
+                                <td><?=$user['name'];?></td>
+                                <?php if($isEval !== false): ?>
+                                    <td>Complete</td>
+                                    <td class="text-center">
+                                        <a href="<?php echo base_url('/evaluate/view/') . $val_eval[$isEval]['evaluate_id']; ?>">
+                                            <i class="material-icons">search</i>
+                                        </a>
+                                    </td>                            
+                                <?php else: ?>
+                                    <td>Waiting to complete</td>
+                                    <td class="text-center">
+                                        <a href="<?php echo base_url('/evaluate/new/') . $user['user_id']; ?>">
+                                            <i class="material-icons">create</i>
+                                        </a>
+                                    </td> 
+                                <?php endif; ?>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
 

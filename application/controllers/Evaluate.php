@@ -117,8 +117,15 @@ class Evaluate extends CI_Controller {
 		$data['user_detail'] = $user_detail;
         $data_detail['user_detail'] = $user_detail;
 
+        $val_target = $this->user_model->getUserInfo_by_id($user_id);
+        $data_detail['target_user'] = $val_target[0];
+
         if($user_detail['level'] == '1'){
             if($user_id != $user_detail['user_id']){
+                $this->index();
+            }
+        }elseif($user_detail['level'] == '2'){
+            if($val_target[0]['department_id'] != $user_detail['department_id']){
                 $this->index();
             }
         }
@@ -136,8 +143,6 @@ class Evaluate extends CI_Controller {
         
         if( $val_eval == ''){           
             $data_detail['no_data'] = 'true';
-            $val_target = $this->user_model->getUserInfo_by_id($user_id);
-            $data_detail['target_user'] = $val_target[0];
 
             $this->load->view('templates/header', $data);
             $this->load->view('evaluate/result',$data_detail);
@@ -146,8 +151,8 @@ class Evaluate extends CI_Controller {
             $data_detail['val_eval'] = $val_eval;
             $count_eval = count($val_eval);
 
-            $val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id']);
-            $count_emp = count($val_user)-1;
+            $val_user = $this->user_model->coountAllEmp_by_department($user_detail['department_id']);
+            $count_emp = $val_user[0]['count']-1;
             $data_detail['count_emp'] = $count_emp;
     
             if($count_eval != $count_emp){
@@ -165,9 +170,6 @@ class Evaluate extends CI_Controller {
             $data_detail['sum_score'] = $sum_score;
             //echo "<pre>" . print_r($final) . "<pre>" . "<br>";
             
-            $val_target = $this->user_model->getUserInfo_by_id($user_id);
-            $data_detail['target_user'] = $val_target[0];
-    
             $this->load->view('templates/header', $data);
             $this->load->view('evaluate/result',$data_detail);
             $this->load->view('templates/footer');

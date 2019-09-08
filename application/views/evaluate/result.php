@@ -9,7 +9,7 @@
 
             <div class="form-group form-row">
                 <label class="col-sm-2 col-form-label" for="name">Employee Name: </label>
-                <input type="text" name="name" value="<?= $target_user['name']; ?>" class="form-control col-sm-3" disabled ">
+                <input type="text" name="name" value="<?= $target_user['name']; ?>" class="form-control col-sm-3" disabled>
             </div>
             <div class=" form-group form-row">
                 <label class="col-sm-2 col-form-label" for="quarter">Quarter</label>
@@ -20,12 +20,12 @@
                 <input type="number" name="year" value="<?= $year; ?>" class="form-control col-sm-3">
             </div>
             <div class="form-group form-row">
-                <button type="submit" name="login-btn" class="btn btn-primary btn-block btn-sm offset-sm-3 col-sm-2">Go to Quarter/Year</button>
+                <button type="submit" name="submit-btn" class="btn btn-primary btn-block btn-sm offset-sm-3 col-sm-2">Go to Quarter/Year</button>
             </div>
         </form>
 
         <?php if($user_detail['level'] == '2'):?>
-            <a href="<?= base_url('/request/') . $target_user['user_id']; ?>" class="btn btn-warning btn-block btn-md offset-sm-10 col-sm-2">Send Request</a>
+            <a href="<?= base_url('/request/new/') . $target_user['user_id']; ?>" class="btn btn-warning btn-block btn-md offset-sm-10 col-sm-2">Send Request</a>
             <p class="offset-sm-10 col-sm-2 text-center mb-0"><small><em>to Director for this user</em></small></p>
         <?php endif;?>
 
@@ -51,8 +51,8 @@
                         <h4>Summay Evaluation Score</h4>
                     </div>
                     <div class="chart-summary">
-                        <button onclick="changeChartType();" data-type="" class="btn btn-success btn-block btn-sm offset-sm-10 col-sm-2">Switch Chart Type</button>    
-                        <canvas id="summary-score" width="400" height="150"></canvas>
+                        <button onclick="changeChartType('chart-summary');" data-type="" class="btn btn-success btn-block btn-sm offset-sm-10 col-sm-2">Switch Chart Type</button>    
+                        <canvas id="chart-summary" width="400" height="150"></canvas>
                     </div>
                     <table class="table mt-4" id="result_emp" style="width:100%">
                         <thead>

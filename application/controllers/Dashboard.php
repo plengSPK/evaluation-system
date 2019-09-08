@@ -9,6 +9,7 @@ class Dashboard extends CI_Controller {
         $this->load->model('user_model');
         $this->load->model('department_model');
 		$this->load->model('evaluate_model');
+		$this->load->model('request_model');
     }
      
 	public function index()
@@ -50,9 +51,21 @@ class Dashboard extends CI_Controller {
 			// 	echo $user['name'] . ": " . $countEval . "<br>";
 			// }
 
+			// foreach($val_user as $index => $user){
+			// 	$request_id = $this->request_model->checkNewRequest($user['user_id'], $user_detail['user_id'],$user_detail['department_id']);
+			// 	if($request_id != false){            
+			// 		$val_user[$index]['request_id'] = $request_id[0]['request_id'];
+			// 		$val_user[$index]['status'] = $request_id[0]['status'];					
+			// 	}else{
+			// 		$val_user[$index]['request_id'] = false;
+			// 	}
+			// }
+			$val_req = $this->request_model->getAllRequest_by_Byuser($user_detail['user_id']);
+
 			$data_index['val_user'] = $val_user;
 			$data_index['val_eval'] = $val_eval;
-	
+			$data_index['val_req'] = $val_req;
+
 			$this->load->view('templates/header', $data);
 			$this->load->view('dashboard/dashboard_manager', $data_index);
 			$this->load->view('templates/footer');
@@ -61,8 +74,11 @@ class Dashboard extends CI_Controller {
 			$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id']);
 			$val_eval = $this->evaluate_model->getAllEvaluation($user_detail['department_id'], $curQuarter, $curYear);
 
+			$val_req = $this->request_model->getAllRequest($user_detail['department_id']);
+
 			$data_index['val_user'] = $val_user;
 			$data_index['val_eval'] = $val_eval;
+			$data_index['val_req'] = $val_req;
 	
 			$this->load->view('templates/header', $data);
 			$this->load->view('dashboard/dashboard_director', $data_index);

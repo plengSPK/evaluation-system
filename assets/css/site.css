@@ -19,7 +19,7 @@
 	font-size: 1.1em;
 }
 
-.form-div.evaluate {
+.form-div.evaluate ,.form-div.request {
 	margin: 25px 0 25px;
 	padding: 25px 15px 10px 15px;
 	font-size: 1.1em;

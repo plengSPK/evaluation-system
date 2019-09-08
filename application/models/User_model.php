@@ -3,7 +3,7 @@
 class User_model extends CI_Model
 {
 
-    public function insertUser($name, $email, $password, $department, $level)
+    public function insertUser($name, $email, $password, $department, $level, $salary)
     {
         $query = $this->db->query("INSERT INTO users (name, email, password, department_id, level, salary) VALUES ('$name', '$email', md5('$password'), $department, $level, $salary)");
         return $query;
@@ -38,6 +38,19 @@ class User_model extends CI_Model
                                                          'level' => '1', 
                                                          'user_id !=' => $user_id));
         }
+
+        if ($query->num_rows() > 0)
+        {  
+            return $query->result_array();
+        }
+    }
+
+    public function coountAllEmp_by_department($department_id){
+        
+        $this->db->select('count(*) as count');
+        $this->db->from('users');
+        $this->db->where(array('department_id' => $department_id, 'level' => '1'));
+        $query = $this->db->get();
 
         if ($query->num_rows() > 0)
         {  

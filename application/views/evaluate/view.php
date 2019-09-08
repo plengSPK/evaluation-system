@@ -1,13 +1,15 @@
 <div class="row">
     <div class="col-md-12 form-div evaluate">
 
-        <form class="form-evaluate col-12" action="<?php echo base_url('/evaluate/new/') . $target_user['user_id']; ?>" method="post">
+        <a href="<?= base_url('/'); ?>">&#8592; Back to Dashboard</a>
+
+        <form class="form-evaluate col-12 mt-5" action="<?php echo base_url('/evaluate/new/') . $target_user['user_id']; ?>" method="post">
 
             <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
             <div class="form-group form-row">
                 <label class="col-sm-2 col-form-label" for="name">Employee Name: </label>
-                <input type="text" name="name" value="<?= $target_user['name']; ?>" class="form-control col-sm-3" disabled ">
+                <input type="text" name="name" value="<?= $target_user['name']; ?>" class="form-control col-sm-3" disabled>
             </div>
             <div class=" form-group form-row">
                 <label class="col-sm-2 col-form-label" for="last_update">Date: </label>
@@ -66,9 +68,8 @@
             </div>
 
             <div class="form-group form-row">
-                <button type="submit" name="login-btn" class="btn btn-primary btn-block btn-lg offset-sm-5 col-sm-2">Update</button>
+                <button type="submit" name="update-btn" class="btn btn-success btn-block btn-lg offset-sm-5 col-sm-2">Update</button>
             </div>
         </form>
-        <a href="<?= base_url('/'); ?>" class="btn btn-success btn-block btn-lg offset-sm-5 col-sm-2">Back</a>
     </div>
 </div>
