@@ -69,7 +69,7 @@
             </div>
             <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
 
-                <table class="table" id="dashboard_manager_pending" style="width:100%">
+                <table class="table-responsive" id="dashboard_manager_pending">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">#</th>
