@@ -17,6 +17,12 @@
                     <p><i>(Department: <?= $department_name; ?>)</i></p>
                 </div>
 
+                <?php if ($this->session->flashdata('approve_info') != '') : ?>
+                    <div class="alert alert-success offset-sm-3 col-sm-6 text-center">
+                        <?= $this->session->flashdata('approve_info'); ?>
+                    </div>
+                <?php endif; ?>
+
                 <table class="table table-responsive w-100 d-block d-md-table" id="dashboard_director">
                     <thead>
                         <tr>
@@ -28,23 +34,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $index_show = 0;
-                              foreach ($val_req as $index => $req) : 
-                              if($req['status'] != 0) continue;
-                              $index_show += 1;
-                              $val_temp = array_search($req['target_user_id'],array_column($val_user, 'user_id'));?>
-                            <tr>
-                                <th scope="row" class="text-center"><?= $index_show; ?></th>
-                                <td><?= $val_user[$val_temp]['name'] ?></td>
-                                <td class="text-center">Pending</td>
-                                <td class="text-center"><?= $req['last_update']; ?></td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('/request/detail/') . $req['request_id']; ?>">
-                                        <i class="material-icons">description</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                        <?php if(isset($val_req)):?>
+                            <?php $index_show = 0;
+                                foreach ($val_req as $index => $req) : 
+                                if($req['status'] != 0) continue;
+                                $index_show += 1;
+                                $val_temp = array_search($req['target_user_id'],array_column($val_user, 'user_id'));?>
+                                <tr>
+                                    <th scope="row" class="text-center"><?= $index_show; ?></th>
+                                    <td><?= $val_user[$val_temp]['name'] ?></td>
+                                    <td class="text-center">Pending</td>
+                                    <td class="text-center"><?= $req['last_update']; ?></td>
+                                    <td class="text-center">
+                                        <a href="<?= base_url('/request/detail/') . $req['request_id']; ?>">
+                                            <i class="material-icons">description</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
 
@@ -66,28 +74,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $index_show = 0;
-                              foreach ($val_req as $index => $req) : 
-                              if($req['status'] == 0) continue;
-                              $index_show += 1;
-                              $val_temp = array_search($req['target_user_id'],array_column($val_user, 'user_id'));?>
-                            <tr>
-                                <th scope="row" class="text-center"><?= $index_show; ?></th>
-                                <td><?= $val_user[$val_temp]['name'] ?></td>
-                                <?php if ($req['status'] == 1) : ?>
-                                    <td class="text-center">Approved</td>
-                                <?php else : ?>
-                                    <td class="text-center">Rejected</td>
-                                <?php endif; ?>
-                                <td class="text-center"><?= $req['last_update']; ?></td>
+                        <?php if(isset($val_req)):?>
+                            <?php $index_show = 0;
+                                foreach ($val_req as $index => $req) : 
+                                if($req['status'] == 0) continue;
+                                $index_show += 1;
+                                $val_temp = array_search($req['target_user_id'],array_column($val_user, 'user_id'));?>
+                                <tr>
+                                    <th scope="row" class="text-center"><?= $index_show; ?></th>
+                                    <td><?= $val_user[$val_temp]['name'] ?></td>
+                                    <?php if ($req['status'] == 1) : ?>
+                                        <td class="text-center">Approved</td>
+                                    <?php else : ?>
+                                        <td class="text-center">Rejected</td>
+                                    <?php endif; ?>
+                                    <td class="text-center"><?= $req['last_update']; ?></td>
 
-                                <td class="text-center">
-                                    <a href="<?= $request_url = base_url('/request/detail/') . $req['request_id']; ?>">
-                                        <i class="material-icons">description</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                                    <td class="text-center">
+                                        <a href="<?= $request_url = base_url('/request/detail/') . $req['request_id']; ?>">
+                                            <i class="material-icons">description</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
 

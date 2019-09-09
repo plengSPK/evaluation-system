@@ -5,8 +5,10 @@ if(!function_exists('getQuarterYear'))
     function getQuarterYear($date = 0){
 
 		if($date == 0){
-			$curMonth = date("m", time());
-			$curYear = date("Y");
+			// $curMonth = date("m", time());
+			// $curYear = date("Y");
+			$curMonth = $GLOBALS['date']['month'];
+			$curYear = $GLOBALS['date']['year'];
 		}else{			
 			$curMonth = $date['month'];
 			$curYear = $date['year'];
@@ -33,6 +35,43 @@ if(!function_exists('convertScore'))
 				break;				
 			case 1:
 				return "Bad";
+				break;
+				
+		}
+	}
+}
+
+if(!function_exists('checkEvaluateDate'))
+{
+    function checkEvaluateDate($date){
+		$evaluate_date = 14;
+		$evaluate_month = array(1,4,7,10);
+
+		if($date['date'] <= $evaluate_date && in_array($date['month'],$evaluate_month)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+}
+
+
+if(!function_exists('getDueDateQuarter'))
+{
+	function getDueDateQuarter($quarter,$year){
+		$duedate = '1 - 14';
+		switch($quarter){
+			case 1:
+				return $duedate . ' April ' . $year;
+				break;			
+			case 2:
+				return $duedate . ' July ' . $year;
+				break;				
+			case 3:
+				return $duedate . ' October ' . $year;
+				break;				
+			case 4:
+				return $duedate . ' January ' . $year+1;
 				break;
 				
 		}

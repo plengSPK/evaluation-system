@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
 
+    public $curQuarter;
+    public $curYear;
+    public $canEval;
     function __construct()
     {
         parent::__construct();
@@ -10,6 +13,11 @@ class Dashboard extends CI_Controller {
         $this->load->model('department_model');
 		$this->load->model('evaluate_model');
 		$this->load->model('request_model');
+
+        [$quarter,$yar] = getQuarterYear();
+        $this->curQuarter = $quarter;
+        $this->curYear = $yar;
+        $this->canEval = checkEvaluateDate($GLOBALS['date']);
     }
      
 	public function index()
@@ -23,18 +31,19 @@ class Dashboard extends CI_Controller {
 		$user_detail = $this->session->user_detail;
 		$data['user_detail'] = $user_detail;
 
-		$temp_date = array('month' => '2','year' => '2019');
-		[$curQuarter,$curYear] = getQuarterYear();
-		$val_date = array('quarter' => $curQuarter, 'year' => $curYear);
+		$val_date = array('quarter' => $this->curQuarter, 'year' => $this->curYear);
 		$data_index['val_date'] = $val_date;
-		//echo $curQuarter. "/" . $curYear;
+  
+        $data_detail['canEval'] = $this->canEval;
+		$duedate = getDueDateQuarter($this->curQuarter, $this->curYear);
+		$data_index['duedate'] = $duedate;
 
 		$department_name = $this->department_model->getDepartment_by_id($user_detail['department_id']);
 		$data_index['department_name'] = $department_name[0]['department_name'];
 
 		if($user_detail['level'] == '1'){			
 			$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id'], $user_detail['user_id']);
-			$val_eval = $this->evaluate_model->getEvaluation_by_emp($user_detail['department_id'], $user_detail['user_id'], $curQuarter, $curYear);
+			$val_eval = $this->evaluate_model->getEvaluation_by_emp($user_detail['department_id'], $user_detail['user_id'], $this->curQuarter, $this->curYear);
 			
 			if($val_eval != false)
 				$precent_complete = number_format((float)count($val_eval)*100/count($val_user), 2, '.', '');
@@ -51,26 +60,8 @@ class Dashboard extends CI_Controller {
 			
 		}elseif($user_detail['level'] == '2'){
 			$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id']);
-			$val_eval = $this->evaluate_model->getAllEvaluation($user_detail['department_id'], $curQuarter, $curYear);
-				// echo "<pre>" . print_r($val_user) . "<pre>" . "<br>";
-				// echo "<pre>" . print_r($val_eval) . "<pre>" . "<br>";
-			// $val_temp = array_count_values(array_column($val_eval, 'target_user_id'));
-			// echo "<pre>" . print_r($val_temp) . "<pre>" . "<br>";
+			$val_eval = $this->evaluate_model->getAllEvaluation($user_detail['department_id'], $this->curQuarter, $this->curYear);
 
-			// foreach($val_user as $index => $user){
-			// 	$countEval = $val_temp[$user['user_id']];
-			// 	echo $user['name'] . ": " . $countEval . "<br>";
-			// }
-
-			// foreach($val_user as $index => $user){
-			// 	$request_id = $this->request_model->checkNewRequest($user['user_id'], $user_detail['user_id'],$user_detail['department_id']);
-			// 	if($request_id != false){            
-			// 		$val_user[$index]['request_id'] = $request_id[0]['request_id'];
-			// 		$val_user[$index]['status'] = $request_id[0]['status'];					
-			// 	}else{
-			// 		$val_user[$index]['request_id'] = false;
-			// 	}
-			// }
 			$val_req = $this->request_model->getAllRequest_by_Byuser($user_detail['user_id']);
 
 			$data_index['val_user'] = $val_user;
@@ -83,7 +74,7 @@ class Dashboard extends CI_Controller {
 
 		}elseif($user_detail['level'] == '3'){
 			$val_user = $this->user_model->getAllEmp_by_department($user_detail['department_id']);
-			$val_eval = $this->evaluate_model->getAllEvaluation($user_detail['department_id'], $curQuarter, $curYear);
+			$val_eval = $this->evaluate_model->getAllEvaluation($user_detail['department_id'], $this->curQuarter, $this->curYear);
 
 			$val_req = $this->request_model->getAllRequest($user_detail['department_id']);
 

@@ -63,3 +63,17 @@ form p {
 	margin: 50px auto 25px;
 	height: 25px;
 }
+.duedate{
+	border: 1px solid #dadada;
+    width: fit-content;
+    margin: auto;
+    margin-top: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    padding: 16px 24px;
+    border-radius: 10px;
+    -webkit-box-shadow: 10px 10px 10px -5px rgba(0,0,0,0.025);
+    -moz-box-shadow: 10px 10px 10px -5px rgba(0,0,0,0.025);
+    box-shadow: 10px 10px 10px -5px rgba(0,0,0,0.025);
+}

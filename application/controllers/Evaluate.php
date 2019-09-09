@@ -2,6 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Evaluate extends CI_Controller {
+    
+    public $curQuarter;
+    public $curYear;
+    public $canEval;
     function __construct()
     {
         parent::__construct();
@@ -9,6 +13,11 @@ class Evaluate extends CI_Controller {
         $this->load->model('department_model');
         $this->load->model('evaluate_model');
         $this->load->library('form_validation');
+        
+        [$quarter,$yar] = getQuarterYear();
+        $this->curQuarter = $quarter;
+        $this->curYear = $yar;
+        $this->canEval = checkEvaluateDate($GLOBALS['date']);
     }
 
     public function index()
@@ -21,6 +30,10 @@ class Evaluate extends CI_Controller {
         if($target_id == 0){
             $this->index();
         }
+        if(empty($this->canEval)){
+            $this->session->set_flashdata('overdue_info', 'The evaluation system is closed now');
+            $this->index();
+        }
 
         $data['subtitle'] = 'Evaluate';
 		$user_detail = $this->session->user_detail;
@@ -28,6 +41,9 @@ class Evaluate extends CI_Controller {
 
         $val = $this->user_model->getUserInfo_by_id($target_id);
         $data_detail['target_user'] = $val[0];
+
+        $data_detail['curQuarter'] = $this->curQuarter;
+        $data_detail['curYear'] = $this->curYear;        
 
         $score_time = $this->input->post('score_time');
         $score_quality = $this->input->post('score_quality');
@@ -41,8 +57,6 @@ class Evaluate extends CI_Controller {
         $this->form_validation->set_rules('score_teamwork', 'Team work', 'required');
         $this->form_validation->set_rules('score_discipline', 'Discipline', 'required');
         
-		$temp_date = array('month' => '2','year' => '2019');
-        [$curQuarter,$curYear] = getQuarterYear();
         
         if ($this->form_validation->run() == TRUE) {
             if($user_detail['user_id'] != $target_id && $user_detail['level'] == '1'){
@@ -55,8 +69,8 @@ class Evaluate extends CI_Controller {
                     'target_user_id' => $target_id,
                     'evaluator_user_id' => $user_detail['user_id'],
                     'department_id' => $user_detail['department_id'],
-                    'quarter' => $curQuarter,
-                    'year' => $curYear,
+                    'quarter' => $this->curQuarter,
+                    'year' => $this->curYear,
                     'last_update' => date('Y-m-d')
                 );
     
@@ -85,7 +99,11 @@ class Evaluate extends CI_Controller {
 
         $data['subtitle'] = 'Evaluate';
         $user_detail = $this->session->user_detail;
-        $data['user_detail'] = $user_detail;        
+        $data['user_detail'] = $user_detail;  
+
+        $data_detail['curQuarter'] = $this->curQuarter;
+        $data_detail['curYear'] = $this->curYear;   
+        $data_detail['canEval'] = $this->canEval;
 
         $val_eval = $this->evaluate_model->getEvaluation_by_id($evalaute_id);
         $data_detail['evalaute_detail'] = $val_eval[0];
@@ -132,7 +150,6 @@ class Evaluate extends CI_Controller {
         }
         
         if($year == 0){
-            $temp_date = array('month' => '2','year' => '2019');
             [$curQuarter,$curYear] = getQuarterYear();
             $val_eval = $this->evaluate_model->getEvaluation_by_targetUser($user_id,$curQuarter,$curYear);
             $data_detail['quarter'] = $curQuarter;

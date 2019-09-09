@@ -7,6 +7,10 @@
 
             <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
+            <div class="text-center mb-5">
+                <h4>Quarter: <?= $curQuarter; ?> / Year: <?= $curYear; ?></h4>
+            </div>
+
             <div class="form-group form-row">
                 <label class="col-sm-2 col-form-label" for="name">Employee Name: </label>
                 <input type="text" name="name" value="<?= $target_user['name']; ?>" class="form-control col-sm-3" disabled>
@@ -67,9 +71,11 @@
                 </table>
             </div>
 
+            <?php if ($canEval != '') : ?>
             <div class="form-group form-row">
                 <button type="submit" name="update-btn" class="btn btn-success btn-block btn-lg offset-sm-5 col-sm-2">Update</button>
             </div>
+            <?php endif; ?>
         </form>
     </div>
 </div>
