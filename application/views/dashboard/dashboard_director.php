@@ -17,7 +17,7 @@
                     <p><i>(Department: <?= $department_name; ?>)</i></p>
                 </div>
 
-                <table class="table-responsive" id="dashboard_director">
+                <table class="table table-responsive w-100 d-block d-md-table" id="dashboard_director">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">#</th>
@@ -55,7 +55,7 @@
                     <h4>History Request</h4>
                 </div>
 
-                <table class="table-responsive" id="dashboard_director_history">
+                <table class="table table-responsive w-100 d-block d-md-table" id="dashboard_director_history">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">#</th>

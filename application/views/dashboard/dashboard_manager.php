@@ -24,7 +24,7 @@
                     </div>
                 <?php endif; ?>
 
-                <table class="table" id="dashboard_manager" style="width:100%">
+                <table class="table table-responsive w-100 d-block d-md-table" id="dashboard_manager">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">#</th>
@@ -69,7 +69,7 @@
             </div>
             <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
 
-                <table class="table-responsive" id="dashboard_manager_pending">
+                <table class="table table-responsive w-100 d-block d-md-table" id="dashboard_manager_pending">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">#</th>

@@ -18,7 +18,7 @@
             </div>
         <?php endif; ?>
 
-        <table class="table" id="dashboard_emp" style="width:100%">
+        <table class="table table-responsive w-100 d-block d-md-table" id="dashboard_emp">
             <thead>
                 <tr>
                     <th scope="col" class="text-center">#</th>
