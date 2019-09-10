@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Request extends CI_Controller {
+    public $curdate;
     function __construct()
     {
         parent::__construct();
@@ -11,6 +12,7 @@ class Request extends CI_Controller {
         $this->load->model('request_model');
         $this->load->model('approve_model');
         $this->load->library('form_validation');
+        $this->curdate = $GLOBALS['date']['year'].'-'.$GLOBALS['date']['month'].'-'.$GLOBALS['date']['date'];
     }
 
     public function index()
@@ -56,7 +58,7 @@ class Request extends CI_Controller {
                     'by_user_id' => $user_detail['user_id'],
                     'department_id' => $user_detail['department_id'],
                     'status' => '0',
-                    'last_update' => date('Y-m-d')
+                    'last_update' => $this->curdate
                 );
     
                 $response_val = $this->request_model->InsertNewRequest($data_insert);
@@ -129,13 +131,13 @@ class Request extends CI_Controller {
 
             if ($this->form_validation->run() == TRUE) {
                 $status = 2;
-                $response_val = $this->request_model->UpdateStatus($request_id, $status);
+                $response_val = $this->request_model->UpdateStatus($request_id, $status, $this->curdate);
 
                 $data_insert = array(
                     'approve_user_id' => $user_detail['user_id'],
                     'reason' => $reason,
                     'request_id' => $request_id,
-                    'last_update' => date('Y-m-d')
+                    'last_update' => $this->curdate
                 );
                 $approve_val = $this->approve_model->InsertNewApprove($data_insert);
 
@@ -146,12 +148,12 @@ class Request extends CI_Controller {
             }
         } elseif( $formSubmit == 'approve' ){
             $status = 1;
-            $response_val = $this->request_model->UpdateStatus($request_id, $status);
+            $response_val = $this->request_model->UpdateStatus($request_id, $status, $this->curdate);
 
             $data_insert = array(
                 'approve_user_id' => $user_detail['user_id'],
                 'request_id' => $request_id,
-                'last_update' => date('Y-m-d')
+                'last_update' => $this->curdate
             );
             $approve_val = $this->approve_model->InsertNewApprove($data_insert);
 

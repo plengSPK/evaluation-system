@@ -1,6 +1,8 @@
 <div class="row">
     <div class="col col-md-12">
 
+        <!-- <div>Today: <?=$today['date'].'-'.$today['month'].'-'.$today['year'];?></div> -->
+
         <ul class="nav nav-tabs dashboard-tab" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
@@ -14,14 +16,14 @@
 
                 <div class="text-center mt-5 mb-5">
                     <div class="duedate">
-                        <?php if(empty($this->canEval)):?>
-                        <h4><font color="red">The system is closed now</font></h4>
-                        <?php else:?>
-                        <h4><font color="dodgerblue">The system opens between <?=$duedate;?></font></h4>
+                        <?php if(empty($this->canEval)): $textDate = 'The Next Evaluation';?>
+                        <h4><font color="red">The system is closed now<br>The system will open between <?=$duedate;?></font></h4>
+                        <?php else: $textDate = 'Current Evaluation';?>
+                        <h4><font color="dodgerblue">The system opens between <?=$duedate;?></font></h4>  
                         <?php endif;?>
                     </div>
 
-                    <h5 class="mt-5"><i>Current Evaluation</i></h5>
+                    <h5 class="mt-5"><i><?= $textDate; ?></i></h5>
                     <h4>Quarter: <?=$val_date['quarter'];?> / Year: <?=$val_date['year'];?></h4>
                     <p><i>(Department: <?= $department_name; ?>)</i></p>
                 </div>

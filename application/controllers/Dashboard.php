@@ -18,6 +18,11 @@ class Dashboard extends CI_Controller {
         $this->curQuarter = $quarter;
         $this->curYear = $yar;
         $this->canEval = checkEvaluateDate($GLOBALS['date']);
+		if(!empty($this->canEval)){
+			[$previousQuarter,$previousYear] = getPreviousQuarter($this->curQuarter, $this->curYear);
+			$this->curQuarter = $previousQuarter;
+			$this->curYear = $previousYear;
+		}
     }
      
 	public function index()
@@ -31,10 +36,12 @@ class Dashboard extends CI_Controller {
 		$user_detail = $this->session->user_detail;
 		$data['user_detail'] = $user_detail;
 
+		$data_index['today'] = $GLOBALS['date'];
+
 		$val_date = array('quarter' => $this->curQuarter, 'year' => $this->curYear);
 		$data_index['val_date'] = $val_date;
   
-        $data_detail['canEval'] = $this->canEval;
+		$data_index['canEval'] = $this->canEval;
 		$duedate = getDueDateQuarter($this->curQuarter, $this->curYear);
 		$data_index['duedate'] = $duedate;
 

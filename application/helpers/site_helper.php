@@ -60,6 +60,9 @@ if(!function_exists('getDueDateQuarter'))
 {
 	function getDueDateQuarter($quarter,$year){
 		$duedate = '1 - 14';
+
+		// [$quarter,$year] = getPreviousQuarter($quarter,$year);
+
 		switch($quarter){
 			case 1:
 				return $duedate . ' April ' . $year;
@@ -71,9 +74,30 @@ if(!function_exists('getDueDateQuarter'))
 				return $duedate . ' October ' . $year;
 				break;				
 			case 4:
-				return $duedate . ' January ' . $year+1;
+				$year += 1;
+				return $duedate . ' January ' . (int)$year;
 				break;
 				
 		}
+	}
+}
+
+
+
+if(!function_exists('getPreviousQuarter'))
+{
+	function getPreviousQuarter($quarter,$year){
+
+		switch ($quarter) {
+			case 1:
+				$quarter = 4;
+				$year -= 1;
+				break;
+			default:
+				$quarter -= 1;
+				break;
+		}
+
+		return [$quarter,$year];
 	}
 }

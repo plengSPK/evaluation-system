@@ -14,7 +14,7 @@
             <?php endif; ?>
 
             <div class="text-center mb-5">
-                <h4>Quarter: <?= $curQuarter; ?> / Year: <?= $curYear; ?></h4>
+                <h4>Quarter: <?= $val_date['quarter']; ?> / Year: <?= $val_date['year']; ?></h4>
             </div>
 
             <div class="form-group form-row">
@@ -23,7 +23,7 @@
             </div>
             <div class=" form-group form-row">
                 <label class="col-sm-2 col-form-label" for="last_update">Date: </label>
-                <input type="text" name="last_update" value="<?= date('d-m-Y'); ?>" class="form-control col-sm-3" disabled>
+                <input type="text" name="last_update" value="<?= $date['date'].'-'.$date['month'].'-'.$date['year']; ?>" class="form-control col-sm-3" disabled>
             </div>
 
             <div class="form-group form-row">

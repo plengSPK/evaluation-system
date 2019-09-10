@@ -14,10 +14,15 @@ class Evaluate extends CI_Controller {
         $this->load->model('evaluate_model');
         $this->load->library('form_validation');
         
-        [$quarter,$yar] = getQuarterYear();
+        [$quarter,$year] = getQuarterYear();
         $this->curQuarter = $quarter;
-        $this->curYear = $yar;
+        $this->curYear = $year;
         $this->canEval = checkEvaluateDate($GLOBALS['date']);
+		if(!empty($this->canEval)){
+			[$previousQuarter,$previousYear] = getPreviousQuarter($this->curQuarter, $this->curYear);
+			$this->curQuarter = $previousQuarter;
+			$this->curYear = $previousYear;
+		}
     }
 
     public function index()
@@ -42,8 +47,10 @@ class Evaluate extends CI_Controller {
         $val = $this->user_model->getUserInfo_by_id($target_id);
         $data_detail['target_user'] = $val[0];
 
-        $data_detail['curQuarter'] = $this->curQuarter;
-        $data_detail['curYear'] = $this->curYear;        
+		$val_date = array('quarter' => $this->curQuarter, 'year' => $this->curYear);
+		$data_detail['val_date'] = $val_date;   
+        $data_detail['canEval'] = $this->canEval;        
+        $data_detail['date'] = $GLOBALS['date'];  
 
         $score_time = $this->input->post('score_time');
         $score_quality = $this->input->post('score_quality');
@@ -71,7 +78,7 @@ class Evaluate extends CI_Controller {
                     'department_id' => $user_detail['department_id'],
                     'quarter' => $this->curQuarter,
                     'year' => $this->curYear,
-                    'last_update' => date('Y-m-d')
+                    'last_update' => $GLOBALS['date']['year'].'-'.$GLOBALS['date']['month'].'-'.$GLOBALS['date']['date']
                 );
     
                 $response_val = $this->evaluate_model->InsertNewRecord($data_insert);
@@ -101,8 +108,8 @@ class Evaluate extends CI_Controller {
         $user_detail = $this->session->user_detail;
         $data['user_detail'] = $user_detail;  
 
-        $data_detail['curQuarter'] = $this->curQuarter;
-        $data_detail['curYear'] = $this->curYear;   
+		$val_date = array('quarter' => $this->curQuarter, 'year' => $this->curYear);
+		$data_detail['val_date'] = $val_date;   
         $data_detail['canEval'] = $this->canEval;
 
         $val_eval = $this->evaluate_model->getEvaluation_by_id($evalaute_id);
@@ -150,10 +157,14 @@ class Evaluate extends CI_Controller {
         }
         
         if($year == 0){
-            [$curQuarter,$curYear] = getQuarterYear();
-            $val_eval = $this->evaluate_model->getEvaluation_by_targetUser($user_id,$curQuarter,$curYear);
-            $data_detail['quarter'] = $curQuarter;
-            $data_detail['year'] = $curYear;
+            if(empty($this->canEval)){
+                [$previousQuarter,$previousYear] = getPreviousQuarter($this->curQuarter, $this->curYear);
+                $this->curQuarter = $previousQuarter;
+                $this->curYear = $previousYear;
+            }
+            $val_eval = $this->evaluate_model->getEvaluation_by_targetUser($user_id,$this->curQuarter,$this->curYear);
+            $data_detail['quarter'] = $this->curQuarter;
+            $data_detail['year'] = $this->curYear;
         }else{
             $val_eval = $this->evaluate_model->getEvaluation_by_targetUser($user_id,$quarter,$year);
             $data_detail['quarter'] = $quarter;

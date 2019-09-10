@@ -8,7 +8,7 @@
             <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
             <div class="text-center mb-5">
-                <h4>Quarter: <?= $curQuarter; ?> / Year: <?= $curYear; ?></h4>
+                <h4>Quarter: <?= $evalaute_detail['quarter']; ?> / Year: <?= $evalaute_detail['year']; ?></h4>
             </div>
 
             <div class="form-group form-row">

@@ -42,10 +42,10 @@ class Request_model extends CI_Model
         }
     }
     
-    public function UpdateStatus($request_id, $status){
+    public function UpdateStatus($request_id, $status, $curdate){
         
         $this->db->where('request_id', $request_id);
-        $query = $this->db->update('requests', array('status' => $status));
+        $query = $this->db->update('requests', array('status' => $status, 'last_update' => $curdate));
         
         return $query;
     }

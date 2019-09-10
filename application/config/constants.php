@@ -89,3 +89,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
  */
 $GLOBALS['date'] = array('date' => date('d'),'month' => date('m',time()),'year' => date('Y'));
 // $GLOBALS['date'] = array('date' => 12,'month' => 7,'year' => 2019);
+// $GLOBALS['date'] = array('date' => 14,'month' => 10,'year' => 2019);
