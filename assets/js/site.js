@@ -56,7 +56,7 @@ $(function(){
         var summary_creativity = $('#result_emp tr td.creativity_score').data('value');
         var summary_teamwork = $('#result_emp tr td.teamwork_score').data('value');
         var summary_discipline = $('#result_emp tr td.discipline_score').data('value');
-    
+        
         config = {
             type: 'bar',
             data: {
@@ -93,7 +93,7 @@ $(function(){
     if($("#all-summary-score").length){
         var count_emp = $('.chart-all-summary').data('count');
 
-        config = {
+        config2 = {
             type: 'bar',            
             data: {
                 labels: ['Time management', 'Quality of work', 'Creativity', 'Team work', 'Discipline'],
@@ -149,10 +149,23 @@ $(function(){
                         borderColor: borderColor[index%6],
                         borderWidth: 1,
                     };
-                    config.data.datasets.push(dataset_temp);
-                    config.data.datasets.push(dataset_temp2);
+                    config2.data.datasets.push(dataset_temp);
+                    config2.data.datasets.push(dataset_temp2);
+                    config2.options =  {
+                        scales: {        
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: 100
+                                }
+                            }]
+                        }
+                    };
                 });
-                changeChartType('all-summary-score'); 
+                
+                var summaryChart = document.getElementById('all-summary-score').getContext("2d");
+                var temp = jQuery.extend(true, {}, config2);
+                var mySummaryChart2 = new Chart(summaryChart, temp);
             },
             error: function(){
                 console.log('error!');

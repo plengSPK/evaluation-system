@@ -46,4 +46,15 @@ class Testcase extends  CI_Controller
 
         echo $this->unit->report();
     }
+    
+    public function testcase4()
+    {
+        $test = getDueDateQuarter(4,2019);
+        $expected_result = '1 - 14 January 2020';
+        $test_name = 'Get duedate of quarter 4 year 2019';
+
+        $this->unit->run($test, $expected_result, $test_name);
+
+        echo $this->unit->report();
+    }
 }

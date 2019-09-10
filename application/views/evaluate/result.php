@@ -3,7 +3,7 @@
 
         <a href="<?= base_url('/'); ?>">&#8592; Back to Dashboard</a>
 
-        <form class="form-evaluate col-12 mt-5" action="<?php echo base_url('/evaluate/result/') . $target_user['user_id']; ?>" method="post">
+        <form class="form-evaluate col-12 mt-5 mb-4" action="<?php echo base_url('/evaluate/result/') . $target_user['user_id']; ?>" method="post">
 
             <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
@@ -30,7 +30,7 @@
         <?php endif;?>
 
         <?php if (isset($no_data)) : ?>
-            <div class="text-center mt-5">
+            <div class="text-center pt-3">
                 <h4>No Record.</h4>
             </div>
         <?php else : ?>
@@ -40,6 +40,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="true">Detail</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="overall-tab" data-toggle="tab" href="#overall" role="tab" aria-controls="overall" aria-selected="true">Overall Score</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -103,6 +106,14 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                </div>
+                <div class="tab-pane fade" id="overall" role="tabpanel" aria-labelledby="overall-tab">
+                    
+                    <div class="all-summary-score mt-3 mb-5" data-id="<?= $target_user['user_id']; ?>">
+                        <h4 class="text-center mt-5 mb-4">Overall Evaluation Score</h4>
+                        <canvas id="all-summary-score" width="400" height="150"></canvas>
+                    </div>
+
                 </div>
             </div>
         <?php endif; ?>
