@@ -14,6 +14,7 @@
         - Employee user can evaluate other user in the same department if the system is open 
         - Can see the summary of thier own evaluation result
         - *Example user:*
+				
             | Email  | Password | Department |
             | ------------- | ------------- | ------------- |
             | nicole@mail.com  | 0123456789  | Developer  |
@@ -27,6 +28,7 @@
         - Can select any employee who should request for the new salary to the director with a overall summary evalution of the employee
         - Can see the result of request is approved or not. If the request is rejected the manager can see the reason
         - *Example user:*
+				
             | Email  | Password | Department |
             | ------------- | ------------- | ------------- |
             | ava@mail.com  | 0123456789  | Developer  |
@@ -35,6 +37,7 @@
         - Can see the list of request for the new salary and choose to approves the request or not
         - Can see the history of request with status
         - *Example user:*
+				
             | Email  | Password | Department |
             | ------------- | ------------- | ------------- |
             | ren@mail.com  | 0123456789  | Developer  |
